@@ -43,6 +43,11 @@ defmodule Alchemy.Discord.RateManager do
             "\n retrying in #{time} ms."
         )
 
+        time = case time do
+          time when is_float(time) -> ceil(time)
+          time -> time
+        end
+
         Process.sleep(time)
         send_req({m, f, a}, route)
 
